@@ -1,61 +1,62 @@
 <template>
-    <div class='comments_container'>
-        <Messages />
-        <AddComments />
+    <div class="comments_container">
+      <Messages />
+      <AddComments />
     </div>
-</template>
-<script>
-import AddComments from './addComments';
-import Messages from './messages';
-export default {
-    name: 'totalPage',
+  </template>
+  <script>
+  import AddComments from "./addComments";
+  import Messages from "./messages";
+  export default {
+    name: "totalPage",
     components: {
-        AddComments, Messages
+      AddComments,
+      Messages,
     },
-};
-</script>
-<style>
-*,
-*::after,
-*::before {
+  };
+  </script>
+  <style>
+  *,
+  *::after,
+  *::before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
-}
-
-
-.comments_container {
+    font-family: "Rubik", sans-serif;
+  }
+  
+  .comments_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    background: var(--very-light-gray, #F5F6FA);
-}
-
-.all_comments {
+    background: var(--very-light-gray, #f5f6fa);
+  }
+  
+  .all_comments {
     flex: 1 0 auto;
-}
-
-.add_message_section {
+  }
+  
+  .add_message_section {
     z-index: 1;
     flex: 0 0 auto;
-}
-
-@media (min-width:730px) {
+  }
+  
+  @media (min-width: 730px) {
     .comments_container {
-        padding-top: 64px;
+      padding-top: 64px;
     }
-
+  
     .all_comments {
-        width: 730px;
-        margin: 0 auto;
+      width: 730px;
+      margin: 0 auto;
     }
-
+  
     .add_message_section {
-        width: 730px;
-        margin: 0 auto;
-        padding: 20px 0px 64px 0px;
+      width: 730px;
+      margin: 0 auto;
+      padding: 20px 0px 64px 0px;
     }
-}
-</style>
+  }
+  </style>
+  
