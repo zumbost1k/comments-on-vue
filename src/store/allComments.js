@@ -7,7 +7,7 @@ export const allCommentsModule = {
     mutations: {
         addComment: (state, newCommentInfo) => {
             const { parentId, newComment } = newCommentInfo;
-            const addAnswerToComment = ((commentList, parentId, newObject) => {
+            const addAnswerToComment = (commentList, parentId, newObject) => {
                 if (!parentId) {
                     commentList.push(newObject);
                 } else {
@@ -20,7 +20,9 @@ export const allCommentsModule = {
                         }
                     }
                 }
-            })(state.allCommentsList, parentId, newComment)
+            }
+
+            addAnswerToComment(state.allCommentsList, parentId, newComment)
         },
         changeQuantityLikes: (state, newQuantityOflikesInfo) => {
             const { id, newQuantityOflikes } = newQuantityOflikesInfo;
@@ -40,7 +42,7 @@ export const allCommentsModule = {
 
         },
         deleteComment: (state, commentToDeleteId) => {
-            const removeComment = ((commentsList, commentIdToRemove) => {
+            const removeComment = (commentsList, commentIdToRemove) => {
                 for (let i = 0; i < commentsList.length; i++) {
                     if (commentsList[i].id === commentIdToRemove) {
                         commentsList.splice(i, 1);
@@ -49,7 +51,8 @@ export const allCommentsModule = {
                         removeComment(commentsList[i].answers, commentIdToRemove);
                     }
                 }
-            })(state.allCommentsList, commentToDeleteId)
+            }
+            removeComment(state.allCommentsList, commentToDeleteId)
 
         },
         changeCommentText: (state, newCommentTextInfo) => {
