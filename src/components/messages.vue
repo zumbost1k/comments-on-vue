@@ -1,13 +1,13 @@
 <template>
-  <section class="all_comments">
-    <Message v-for="comment in allComments" :comment="comment" :key="comment.id"></Message>
+  <section class='all_comments'>
+    <Message v-for='comment in allComments' :comment='comment' :key='comment.id'></Message>
   </section>
 </template>
 <script>
-import Message from "./Message.vue";
-import { mapState } from "vuex";
+import Message from './Message.vue';
+import { mapState } from 'vuex';
 export default {
-  name: "Messages",
+  name: 'Messages',
   components: {
     Message,
   },

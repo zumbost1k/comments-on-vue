@@ -1,16 +1,16 @@
 <template>
-  <p class="comment_user_text" v-if="isReferenceToUser">
-    <span class="comment_user_text_first_word">@{{ firstWord }}</span>
+  <p class='comment_user_text' v-if='isReferenceToUser'>
+    <span class='comment_user_text_first_word'>@{{ firstWord }}</span>
     {{ commentText.slice(firstSpaceIndex + 1) }}
   </p>
-  <p class="comment_user_text" v-else>{{ commentText }}</p>
+  <p class='comment_user_text' v-else>{{ commentText }}</p>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-  name: "ReferenceChecking",
+  name: 'ReferenceChecking',
   props: {
     commentText: {
       type: String,
@@ -22,10 +22,10 @@ export default {
       allAccountsList: (state) => state.allAccounts.allAccountsList,
     }),
     firstSpaceIndex() {
-      return this.commentText.indexOf(" ");
+      return this.commentText.indexOf(' ');
     },
     firstWord() {
-      if (this.commentText.startsWith("@")) {
+      if (this.commentText.startsWith('@')) {
         return this.commentText.substring(1, this.firstSpaceIndex);
       } else {
         return false;

@@ -1,51 +1,51 @@
 <template>
-  <section class="add_message_section">
-    <form @submit.prevent="addMessageHandler" class="message_form">
+  <section class='add_message_section'>
+    <form @submit.prevent='addMessageHandler' class='message_form'>
       <textarea
-        class="message_textarea"
-        v-model="currentTextAreaValue"
-        name="message"
-        id="message"
-        cols="30"
-        rows="10"
-        placeholder="Add a comment…"
+        class='message_textarea'
+        v-model='currentTextAreaValue'
+        name='message'
+        id='message'
+        cols='30'
+        rows='10'
+        placeholder='Add a comment…'
         required
       ></textarea>
       <img
-        class="avatar"
-        width="32"
-        height="32"
-        :src="require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)"
-        alt="avatar"
+        class='avatar'
+        width='32'
+        height='32'
+        :src='require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)'
+        alt='avatar'
       />
-      <button class="send_message" type="submit">SEND</button>
+      <button class='send_message' type='submit'>SEND</button>
     </form>
 
     <select
-      @change="changeCurrentUser(Number($event.target.value))"
-      name="user_names"
-      id="user_names"
+      @change='changeCurrentUser(Number($event.target.value))'
+      name='user_names'
+      id='user_names'
     >
-      <option v-for="(account, index) in allAccountsList" :key="account.id" :value="index">
+      <option v-for='(account, index) in allAccountsList' :key='account.id' :value='index'>
         {{ account.accountName }}
       </option>
     </select>
   </section>
 </template>
 <script>
-import { v4 } from "uuid";
-import { mapState, mapMutations } from "vuex";
+import { v4 } from 'uuid';
+import { mapState, mapMutations } from 'vuex';
 export default {
-  name: "AddComments",
+  name: 'AddComments',
   data() {
     return {
-      currentTextAreaValue: "",
+      currentTextAreaValue: '',
     };
   },
   methods: {
     ...mapMutations({
-      addComment: "allComments/addComment",
-      changeCurrentUser: "allAccounts/changeCurrentUser",
+      addComment: 'allComments/addComment',
+      changeCurrentUser: 'allAccounts/changeCurrentUser',
     }),
     addMessageHandler() {
       const newComment = {
@@ -59,7 +59,7 @@ export default {
       this.addComment({
         newComment,
       });
-      this.currentTextAreaValue = "";
+      this.currentTextAreaValue = '';
     },
   },
   computed: {
@@ -99,14 +99,14 @@ export default {
 
 .message_textarea::placeholder {
   color: var(--grayish-blue, #67727e);
-  font-feature-settings: "clig" off, "liga" off;
+  font-feature-settings: 'clig' off, 'liga' off;
   font-weight: 400;
   line-height: 24px;
 }
 
 .send_message {
   color: var(--white, #fff);
-  font-feature-settings: "clig" off, "liga" off;
+  font-feature-settings: 'clig' off, 'liga' off;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

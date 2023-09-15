@@ -1,124 +1,124 @@
 <template>
-  <div class="comments_item">
-    <div class="comment_user_info">
+  <div class='comments_item'>
+    <div class='comment_user_info'>
       <img
-        :src="require(`../photos/photosForProfile/${commentAuthor.pathToPhoto}`)"
-        :alt="commentAuthor.accountName"
-        width="32"
-        height="32"
+        :src='require(`../photos/photosForProfile/${commentAuthor.pathToPhoto}`)'
+        :alt='commentAuthor.accountName'
+        width='32'
+        height='32'
       />
-      <p class="comment_user_name">{{ commentAuthor.accountName }}</p>
-      <span v-if="isCurrentUserComment" class="its_you">you</span>
-      <p class="comment_user_date">{{ dateDifference(comment.date) }}</p>
+      <p class='comment_user_name'>{{ commentAuthor.accountName }}</p>
+      <span v-if='isCurrentUserComment' class='its_you'>you</span>
+      <p class='comment_user_date'>{{ dateDifference(comment.date) }}</p>
     </div>
 
     <textarea
-      v-if="isEditModeActive"
-      v-model="textareaValue"
-      class="comment_user_text comment_user_edit_textarea"
+      v-if='isEditModeActive'
+      v-model='textareaValue'
+      class='comment_user_text comment_user_edit_textarea'
     ></textarea>
-    <ReferenceChecking v-else :comment-text="textareaValue"></ReferenceChecking>
+    <ReferenceChecking v-else :comment-text='textareaValue'></ReferenceChecking>
 
-    <div class="quantity_of_likes_container">
+    <div class='quantity_of_likes_container'>
       <button
-        type="button"
-        class="quantity_calc_button"
-        @click="
+        type='button'
+        class='quantity_calc_button'
+        @click='
           changeQuantityLikes({
             id: comment.id,
             newQuantityOflikes: comment.quantityOflikes + 1,
           })
-        "
+        '
       >
-        <img width=" 10" height="10" src="../photos/+.svg" alt="minus" />
+        <img width=' 10' height='10' src='../photos/+.svg' alt='minus' />
       </button>
-      <span class="quantity_of_likes_textholder">{{ comment.quantityOflikes }}</span>
+      <span class='quantity_of_likes_textholder'>{{ comment.quantityOflikes }}</span>
       <button
-        type="button"
-        class="quantity_calc_button"
-        @click="
+        type='button'
+        class='quantity_calc_button'
+        @click='
           changeQuantityLikes({
             id: comment.id,
             newQuantityOflikes: comment.quantityOflikes - 1,
           })
-        "
+        '
       >
-        <img width="10" height="10" src="../photos/-.svg" alt="minus" />
+        <img width='10' height='10' src='../photos/-.svg' alt='minus' />
       </button>
     </div>
-    <div v-if="isCurrentUserComment" class="delete_edit_buttons_container">
+    <div v-if='isCurrentUserComment' class='delete_edit_buttons_container'>
       <button
-        @click="setShowModal(true)"
-        :disabled="isEditModeActive"
-        type="button"
-        class="edit_comment_state_button delete_btn"
+        @click='setShowModal(true)'
+        :disabled='isEditModeActive'
+        type='button'
+        class='edit_comment_state_button delete_btn'
       >
         <Delete></Delete> Delete
       </button>
       <button
-        type="button"
-        :disabled="isEditModeActive"
-        @click="setIsEdit(true)"
-        class="edit_comment_state_button edit_btn"
+        type='button'
+        :disabled='isEditModeActive'
+        @click='setIsEdit(true)'
+        class='edit_comment_state_button edit_btn'
       >
         <Edit></Edit> Edit
       </button>
     </div>
     <button
       v-else
-      class="delete_edit_buttons_container reply_btn"
-      @click="setIsReplying(true)"
-      type="button"
+      class='delete_edit_buttons_container reply_btn'
+      @click='setIsReplying(true)'
+      type='button'
     >
-      <Reply></Reply><span class="reply_text">Reply</span>
+      <Reply></Reply><span class='reply_text'>Reply</span>
     </button>
-    <button v-if="isEditModeActive" class="udate_comment_text_btn" @click="onUpdateClick">
+    <button v-if='isEditModeActive' class='udate_comment_text_btn' @click='onUpdateClick'>
       UPDATE
     </button>
 
     <ModalWindow
-      @show-modal="setShowModal"
-      @delete-comment="deleteCommentHandler"
-      v-if="showModal"
-      :comment-id="comment.id"
+      @show-modal='setShowModal'
+      @delete-comment='deleteCommentHandler'
+      v-if='showModal'
+      :comment-id='comment.id'
     ></ModalWindow>
   </div>
-  <div class="reply_container">
-    <form v-if="isReplying" @submit.prevent="addAnswerHandler" class="answer_form">
+  <div class='reply_container'>
+    <form v-if='isReplying' @submit.prevent='addAnswerHandler' class='answer_form'>
       <textarea
-        v-model="replyText"
-        class="message_textarea"
-        name="message"
-        id="message"
-        cols="30"
-        rows="10"
-        placeholder="Add a reply…"
+        v-model='replyText'
+        class='message_textarea'
+        name='message'
+        id='message'
+        cols='30'
+        rows='10'
+        placeholder='Add a reply…'
         required
       ></textarea>
       <img
-        class="avatar"
-        width="32"
-        height="32"
-        :src="require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)"
-        alt="avatar"
+        class='avatar'
+        width='32'
+        height='32'
+        :src='require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)'
+        alt='avatar'
       />
-      <button class="send_message" type="submit">REPLY</button>
+      <button class='send_message' type='submit'>REPLY</button>
     </form>
-    <div v-if="comment.answers && comment.answers.length !== 0">
-      <Message :comment="answer" v-for="answer in comment.answers" :key="answer.id"></Message>
+    <div v-if='comment.answers && comment.answers.length !== 0'>
+      <Message :comment='answer' v-for='answer in comment.answers' :key='answer.id'></Message>
     </div>
   </div>
 </template>
 <script>
-import moment from "moment";
-import { v4 } from "uuid";
-import ReferenceChecking from "./ReferenceChecking";
-import { mapState, mapMutations } from "vuex";
-import Delete from "../icons/Delete";
-import Edit from "../icons/Edit";
-import Reply from "../icons/Reply";
-import Message from "./Message";
-import ModalWindow from "./Modal.vue";
+import moment from 'moment';
+import { v4 } from 'uuid';
+import ReferenceChecking from './ReferenceChecking';
+import { mapState, mapMutations } from 'vuex';
+import Delete from '../icons/Delete';
+import Edit from '../icons/Edit';
+import Reply from '../icons/Reply';
+import Message from './Message';
+import ModalWindow from './Modal.vue';
 export default {
   components: {
     ReferenceChecking,
@@ -128,7 +128,7 @@ export default {
     Reply,
     ModalWindow,
   },
-  name: "Message",
+  name: 'Message',
   props: {
     comment: {
       type: Object,
@@ -140,16 +140,16 @@ export default {
       showModal: false,
       isEditModeActive: false,
       isReplying: false,
-      textareaValue: "",
-      replyText: "",
+      textareaValue: '',
+      replyText: '',
     };
   },
   methods: {
     ...mapMutations({
-      addComment: "allComments/addComment",
-      changeQuantityLikes: "allComments/changeQuantityLikes",
-      changeCommentText: "allComments/changeCommentText",
-      deleteComment: "allComments/deleteComment",
+      addComment: 'allComments/addComment',
+      changeQuantityLikes: 'allComments/changeQuantityLikes',
+      changeCommentText: 'allComments/changeCommentText',
+      deleteComment: 'allComments/deleteComment',
     }),
     deleteCommentHandler(commentId) {
       this.setShowModal(false);
@@ -163,8 +163,8 @@ export default {
       });
     },
     dateDifference(startDate) {
-      const formattedNow = moment(startDate).format("YYYY-MM-DD HH:mm");
-      return moment(formattedNow, "YYYY-MM-DD HH:mm").fromNow(true);
+      const formattedNow = moment(startDate).format('YYYY-MM-DD HH:mm');
+      return moment(formattedNow, 'YYYY-MM-DD HH:mm').fromNow(true);
     },
 
     addAnswerHandler() {
@@ -180,7 +180,7 @@ export default {
         parentId: this.comment.id,
         newComment: newComment,
       });
-      this.replyText = "@" + this.commentAuthor.accountName;
+      this.replyText = '@' + this.commentAuthor.accountName;
       this.isReplying = false;
     },
     setIsReplying(newIsReplying) {
@@ -214,7 +214,7 @@ export default {
     commentAuthor: {
       immediate: true,
       handler(newVal) {
-        this.replyText = "@" + newVal.accountName;
+        this.replyText = '@' + newVal.accountName;
       },
     },
   },
