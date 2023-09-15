@@ -5,10 +5,10 @@
     </div>
   </template>
   <script>
-  import AddComments from "./addComments";
-  import Messages from "./messages";
+  import AddComments from "./AddComments";
+  import Messages from "./Messages";
   export default {
-    name: "totalPage",
+    name: "TotalPage",
     components: {
       AddComments,
       Messages,

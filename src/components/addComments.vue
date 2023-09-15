@@ -1,40 +1,15 @@
 <template>
   <section class="add_message_section">
     <form @submit.prevent="addMessageHandler" class="message_form">
-      <textarea
-        class="message_textarea"
-        v-model="currentTextAreaValue"
-        name="message"
-        id="message"
-        cols="30"
-        rows="10"
-        placeholder="Add a comment…"
-        required
-      />
-      <img
-        class="avatar"
-        width="32"
-        height="32"
-        :src="require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)"
-        alt="avatar"
-      />
+      <textarea class="message_textarea" v-model="currentTextAreaValue" name="message" id="message" cols="30" rows="10"
+        placeholder="Add a comment…" required />
+      <img class="avatar" width="32" height="32" :src="require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)"
+        alt="avatar" />
       <button class="send_message" type="submit">SEND</button>
     </form>
 
-    <select
-      @change="
-        (event) => {
-          changeCurrentUser(Number(event.target.value));
-        }
-      "
-      name="user_names"
-      id="user_names"
-    >
-      <option
-        v-for="(account, index) in allAccountsList"
-        :key="account.id"
-        :value="index"
-      >
+    <select @change="changeCurrentUser(Number($event.target.value))" name="user_names" id="user_names">
+      <option v-for="(account, index) in allAccountsList" :key="account.id" :value="index">
         {{ account.accountName }}
       </option>
     </select>
@@ -42,7 +17,6 @@
 </template>
 <script>
 import { v4 } from "uuid";
-import moment from "moment/moment";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "AddComments",
@@ -52,30 +26,25 @@ export default {
     };
   },
   methods: {
-    updateInput(event) {
-      this.currentTextAreaValue = event.target.value;
-    },
+    ...mapMutations({
+      addComment: "allComments/addComment",
+      changeCurrentUser: "allAccounts/changeCurrentUser",
+    }),
     addMessageHandler() {
       const newComment = {
         id: v4(),
         userId: this.currentUser.id,
         text: this.currentTextAreaValue,
-        date: moment().format("YYYY-MM-DD HH:mm"),
+        date: Date.now(),
         quantityOflikes: 1,
         answers: [],
       };
       this.addComment({
-        newComment: newComment,
+        newComment,
       });
-      this.setCurrentTextAreaValue("");
+      this.currentTextAreaValue="";
     },
-    ...mapMutations({
-      addComment: "allComments/addComment",
-      changeCurrentUser: "allAccounts/changeCurrentUser",
-    }),
-    setCurrentTextAreaValue(newValue) {
-      this.currentTextAreaValue = newValue;
-    },
+
   },
   computed: {
     ...mapState({
@@ -91,7 +60,7 @@ export default {
 .message_form {
   border-radius: 8px;
   background: var(--white, #fff);
-  margin: 16px 16px 32px 16px;
+  margin: 16px 16px 32px;
   position: relative;
   display: flex;
   flex-wrap: wrap;

@@ -8,7 +8,7 @@
     </section>
   </template>
   <script>
-  import Message from "./message.vue";
+  import Message from "./Message.vue";
   import { mapState } from "vuex";
   export default {
     name: "Messages",

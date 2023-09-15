@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import TotalPage from '../components/totalPage'
+import TotalPage from '../components/TotalPage'
 const routes = [
   {
     path: '/',
