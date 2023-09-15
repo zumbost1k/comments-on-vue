@@ -5,7 +5,7 @@
   </p>
   <p class="comment_user_text" v-else>{{ commentText }}</p>
 </template>
-  
+
 <script>
 import { mapState } from "vuex";
 
@@ -33,14 +33,10 @@ export default {
     },
     isReferenceToUser() {
       if (this.firstWord) {
-        return this.allAccountsList.some(
-          (account) => this.firstWord === account.accountName
-        );
+        return this.allAccountsList.some((account) => this.firstWord === account.accountName);
+      } else {
+        return false;
       }
-      else {
-        return false
-      }
-
     },
   },
 };
@@ -51,4 +47,3 @@ export default {
   font-weight: 600;
 }
 </style>
-  

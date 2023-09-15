@@ -1,14 +1,31 @@
 <template>
   <section class="add_message_section">
     <form @submit.prevent="addMessageHandler" class="message_form">
-      <textarea class="message_textarea" v-model="currentTextAreaValue" name="message" id="message" cols="30" rows="10"
-        placeholder="Add a comment…" required />
-      <img class="avatar" width="32" height="32" :src="require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)"
-        alt="avatar" />
+      <textarea
+        class="message_textarea"
+        v-model="currentTextAreaValue"
+        name="message"
+        id="message"
+        cols="30"
+        rows="10"
+        placeholder="Add a comment…"
+        required
+      ></textarea>
+      <img
+        class="avatar"
+        width="32"
+        height="32"
+        :src="require(`../photos/photosForProfile/${currentUser.pathToPhoto}`)"
+        alt="avatar"
+      />
       <button class="send_message" type="submit">SEND</button>
     </form>
 
-    <select @change="changeCurrentUser(Number($event.target.value))" name="user_names" id="user_names">
+    <select
+      @change="changeCurrentUser(Number($event.target.value))"
+      name="user_names"
+      id="user_names"
+    >
       <option v-for="(account, index) in allAccountsList" :key="account.id" :value="index">
         {{ account.accountName }}
       </option>
@@ -42,9 +59,8 @@ export default {
       this.addComment({
         newComment,
       });
-      this.currentTextAreaValue="";
+      this.currentTextAreaValue = "";
     },
-
   },
   computed: {
     ...mapState({
