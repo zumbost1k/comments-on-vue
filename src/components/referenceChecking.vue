@@ -25,19 +25,22 @@ export default {
       return this.commentText.indexOf(' ');
     },
     firstWord() {
-      if (this.commentText.startsWith('@')) {
-        return this.commentText.substring(1, this.firstSpaceIndex);
+      const firstWordWithAt = this.commentText.substring(0, this.firstSpaceIndex);
+      if (firstWordWithAt.startsWith('@')) {
+        const wordWithoutAt = firstWordWithAt.replace(/^@+/, '');
+        return wordWithoutAt.length > 0 ? wordWithoutAt : '';
       } else {
-        return false;
+        return '';
       }
     },
     isReferenceToUser() {
-      if (this.firstWord) {
-        return this.allAccountsList.some((account) => this.firstWord === account.accountName);
+      if (this.firstWord.length > 0) {
+        return this.allAccountsList.some((account) => this.firstWord === account.accountName) ? true : false;
       } else {
         return false;
       }
     },
+
   },
 };
 </script>
