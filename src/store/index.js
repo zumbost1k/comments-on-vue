@@ -1,14 +1,9 @@
 import { createStore } from 'vuex'
-
+import { allCommentsModule } from './allComments'
+import { allAccountsModule } from './allAccounts'
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    allAccounts: allAccountsModule,
+    allComments: allCommentsModule
   }
 })
