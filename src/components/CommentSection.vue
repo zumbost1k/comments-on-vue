@@ -1,17 +1,17 @@
 <template>
-  <div class='comments_container'>
-    <Messages></Messages>
-    <AddComments></AddComments>
+  <div class="comments_container">
+    <Comments></Comments>
+    <AddComment></AddComment>
   </div>
 </template>
 <script>
-import AddComments from './AddComments';
-import Messages from './Messages';
+import AddComment from "./AddComment";
+import Comments from "./Comments";
 export default {
-  name: 'TotalPage',
+  name: "CommentSection",
   components: {
-    AddComments,
-    Messages,
+    AddComment,
+    Comments,
   },
 };
 </script>
@@ -22,7 +22,7 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 .comments_container {

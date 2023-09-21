@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import TotalPage from '../components/TotalPage.vue'
+import CommentSection from '../components/CommentSection.vue'
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: TotalPage
+    component: CommentSection
   },
 
 ]

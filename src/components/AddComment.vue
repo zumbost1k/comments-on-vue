@@ -36,7 +36,7 @@
 import { v4 } from 'uuid';
 import { mapState, mapMutations } from 'vuex';
 export default {
-  name: 'AddComments',
+  name: 'AddComment',
   data() {
     return {
       currentTextAreaValue: '',
