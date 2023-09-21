@@ -1,4 +1,12 @@
-
+const commentSearchById = (commentList, commentId, actionFunction) => {
+    commentList.forEach((currentComment, i) => {
+        if (currentComment.id === commentId) {
+            actionFunction(commentList, i)
+        } else if (currentComment.answers.length) {
+            commentSearchById(currentComment.answers, commentId, actionFunction);
+        }
+    });
+}
 
 export const allCommentsModule = {
     state: () => ({
@@ -7,67 +15,37 @@ export const allCommentsModule = {
     mutations: {
         addComment: (state, newCommentInfo) => {
             const { parentId, newComment } = newCommentInfo;
-            const addAnswerToComment = (commentList, parentId, newObject) => {
-                if (!parentId) {
-                    commentList.push(newObject);
-                } else {
-                    for (let i = 0; i < commentList.length; i++) {
-                        const currentComment = commentList[i];
-                        if (currentComment.id === parentId) {
-                            currentComment.answers.push(newObject);
-                        } else if (currentComment.answers.length) {
-                            addAnswerToComment(currentComment.answers, parentId, newObject);
-                        }
-                    }
-                }
+            const addAnswer = (commentToAddAnswer, index) => {
+                commentToAddAnswer[index].answers.push(newComment)
             }
-
-            addAnswerToComment(state.allCommentsList, parentId, newComment)
+            if (!parentId) {
+                state.allCommentsList.push(newComment)
+            }
+            else {
+                commentSearchById(state.allCommentsList, parentId, addAnswer)
+            }
         },
         changeQuantityLikes: (state, newQuantityOflikesInfo) => {
             const { id, newQuantityOflikes } = newQuantityOflikesInfo;
-            const updateLikeById = (commentList, targetId, quantityOflikes) => {
-                commentList.forEach(comment => {
-                    if (comment.id === targetId) {
-                        comment.quantityOflikes = quantityOflikes;
-                    } else if (comment.answers) {
-                        updateLikeById(comment.answers, targetId, quantityOflikes);
-                    }
-                });
+            const changeQuantityOfLikes = (commentToChangeQuantityOfLikes, index) => {
+                commentToChangeQuantityOfLikes[index].quantityOflikes = newQuantityOflikes
             }
-
             if (newQuantityOflikes > 0) {
-                updateLikeById(state.allCommentsList, id, newQuantityOflikes);
+                commentSearchById(state.allCommentsList, id, changeQuantityOfLikes);
             }
-
         },
         deleteComment: (state, commentToDeleteId) => {
-            const removeComment = (commentsList, commentIdToRemove) => {
-                for (let i = 0; i < commentsList.length; i++) {
-                    if (commentsList[i].id === commentIdToRemove) {
-                        commentsList.splice(i, 1);
-                        i--;
-                    } else if (commentsList[i].answers.length) {
-                        removeComment(commentsList[i].answers, commentIdToRemove);
-                    }
-                }
+            const removeComment = (commentsList, commentIndexToRemove) => {
+                commentsList.splice(commentIndexToRemove, 1);
             }
-            removeComment(state.allCommentsList, commentToDeleteId)
-
+            commentSearchById(state.allCommentsList, commentToDeleteId, removeComment)
         },
         changeCommentText: (state, newCommentTextInfo) => {
             const { id, newCommentText } = newCommentTextInfo;
-            const updateTextById = (commentsList, targetId, newText) => {
-                for (let i = 0; i < commentsList.length; i++) {
-                    if (commentsList[i].id === targetId) {
-                        commentsList[i].text = newText;
-                    } else if (commentsList[i].answers.length) {
-                        updateTextById(commentsList[i].answers, targetId, newText);
-                    }
-                }
+            const updateText = (commentToChangeText, index) => {
+                commentToChangeText[index].text = newCommentText
             }
-
-            updateTextById(state.allCommentsList, id, newCommentText);
+            commentSearchById(state.allCommentsList, id, updateText);
         }
     },
     namespaced: true
